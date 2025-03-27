@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+import InsideHeader from "../components/InsideHeader.astro";
+title: "Solicitar Cita";
+---
+
+<Layout>
+  <html>
+    <head>
+      <title>Solicitar Cita</title>
+    </head>
+    <body class="flex items-center justify-center bg-gray-100">
+      <InsideHeader />
+      <div class="bg-white p-8 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-semibold text-center mb-4">Solicitar Cita</h2>
+        <form>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-medium mb-2">Nombre</label>
+            <input
+              type="text"
+              class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Ingrese su nombre"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-medium mb-2">Apellido</label>
+            <input
+              type="text"
+              class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Ingrese su apellido"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-medium mb-2">Día</label>
+            <input
+              type="date"
+              class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-medium mb-2">Hora</label>
+            <input
+              type="time"
+              class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+          <button
+            class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition"
+            >Solicitar</button
+          >
+        </form>
+      </div>
+    </body>
+  </html>
+</Layout>
