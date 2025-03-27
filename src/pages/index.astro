@@ -1,0 +1,65 @@
+---
+import HomeHeader from "../components/HomeHeader.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+      <HomeHeader />
+      <section class="bg-blue-500 text-white text-center py-20">
+        <h1 class="text-4xl font-bold mb-4">Servicios Notariales Confiables</h1>
+        <p class="text-lg mb-6">
+          Asesoría legal y certificaciones con total confianza y
+          profesionalismo.
+        </p>
+        <a
+          href="#contacto"
+          class="bg-white text-blue-600 px-6 py-3 rounded-md font-semibold"
+          >Contáctanos</a
+        >
+      </section>
+      <section class="max-w-6xl mx-auto py-16 px-4 grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 shadow-md rounded-lg text-center">
+          <h3 class="text-2xl font-semibold mb-2">Escrituras Públicas</h3>
+          <p class="text-gray-600">
+            Redacción y certificación de documentos legales.
+          </p>
+        </div>
+        <div class="bg-white p-6 shadow-md rounded-lg text-center">
+          <h3 class="text-2xl font-semibold mb-2">Poderes Notariales</h3>
+          <p class="text-gray-600">
+            Otorgamiento y gestión de poderes legales.
+          </p>
+        </div>
+        <div class="bg-white p-6 shadow-md rounded-lg text-center">
+          <h3 class="text-2xl font-semibold mb-2">Testamentos</h3>
+          <p class="text-gray-600">Garantiza la seguridad de tu patrimonio.</p>
+        </div>
+      </section>
+      <section class="bg-gray-200 py-16 text-center">
+        <h2 class="text-3xl font-bold mb-6">Lo que dicen nuestros clientes</h2>
+        <p class="max-w-2xl mx-auto text-gray-700">
+          "Servicio profesional y confiable. Recomiendo totalmente esta
+          notaría." - Juan Pérez
+        </p>
+      </section>
+      <section id="contacto" class="max-w-4xl mx-auto py-16 px-6 text-center">
+        <h2 class="text-3xl font-bold mb-4">Ponte en Contacto</h2>
+        <p class="text-gray-700 mb-6">
+          Estamos aquí para resolver tus dudas y asesorarte.
+        </p>
+        <a
+          href="mailto:contacto@notaria.com"
+          class="bg-blue-600 text-white px-6 py-3 rounded-md">Enviar Mensaje</a
+        >
+      </section>
+      <footer class="bg-gray-900 text-white text-center py-6">
+        <p>&copy; 2025 Notaría. Todos los derechos reservados.</p>
+      </footer>
+    </body>
+  </html>
+</Layout>
