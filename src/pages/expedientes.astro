@@ -1,0 +1,46 @@
+---
+import InsideHeader from "../components/InsideHeader.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <InsideHeader />
+  <div class="max-w-6xl mx-auto p-8 bg-white border rounded shadow mt-10">
+    <h2 class="text-2xl font-bold text-center mb-6">Mis tramites</h2>
+
+    <!-- Tabla de clientes y trámites -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border rounded shadow">
+        <thead class="bg-gray-100 text-gray-700 text-sm">
+          <tr>
+            <th class="py-3 px-4 text-left border">#</th>
+            <th class="py-3 px-4 text-left border">Nombre</th>
+            <th class="py-3 px-4 text-left border">Trámite</th>
+            <th class="py-3 px-4 text-left border">Fecha</th>
+            <th class="py-3 px-4 text-left border">Estado</th>
+            <th class="py-3 px-4 text-center border">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Cliente 1 -->
+          <tr class="hover:bg-gray-50">
+            <td class="py-2 px-4 border">1</td>
+            <td class="py-2 px-4 border">María López</td>
+            <td class="py-2 px-4 border">Escritura pública</td>
+            <td class="py-2 px-4 border">15/05/2024</td>
+            <td class="py-2 px-4 border text-green-600 font-semibold">Finalizado</td>
+            <td class="py-2 px-4 border text-center">
+              <button class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 mr-2">Ver</button>
+              <button class="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600">Cancelar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="flex justify-center mt-6">
+        <a href="/personalizados" class="text-blue-600 font-medium hover:underline">
+          Nuevo trámite
+        </a>
+      </div>
+    </div>
+  </div>
+</Layout>

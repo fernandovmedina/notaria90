@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import InsideHeader from "../components/InsideHeader.astro";
-title: "Solicitar Cita";
 ---
 
 <Layout>
@@ -9,9 +8,9 @@ title: "Solicitar Cita";
     <head>
       <title>Solicitar Cita</title>
     </head>
-    <body class="flex items-center justify-center bg-gray-100">
+    <body class="flex flex-col items-center justify-start min-h-screen bg-gray-100">
       <InsideHeader />
-      <div class="bg-white p-8 rounded-2xl shadow-lg">
+      <div class="bg-white p-8 rounded-2xl shadow-lg mt-8 w-full">
         <h2 class="text-2xl font-semibold text-center mb-4">Solicitar Cita</h2>
         <form>
           <div class="mb-4">
@@ -46,9 +45,40 @@ title: "Solicitar Cita";
           </div>
           <button
             class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition"
-            >Solicitar</button
           >
+            Solicitar
+          </button>
         </form>
+      </div>
+
+      <div class="bg-white p-8 rounded-2xl shadow-lg mt-8 w-screen px-8">
+        <h2 class="text-2xl font-semibold text-center mb-4">Citas Pendientes</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full table-auto border border-gray-300">
+            <thead>
+              <tr class="bg-gray-200 text-left">
+                <th class="px-4 py-2 border-b">Nombre</th>
+                <th class="px-4 py-2 border-b">Apellido</th>
+                <th class="px-4 py-2 border-b">Día</th>
+                <th class="px-4 py-2 border-b">Hora</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="hover:bg-gray-100">
+                <td class="px-4 py-2 border-b">Juan</td>
+                <td class="px-4 py-2 border-b">Pérez</td>
+                <td class="px-4 py-2 border-b">2025-05-22</td>
+                <td class="px-4 py-2 border-b">10:30</td>
+              </tr>
+              <tr class="hover:bg-gray-100">
+                <td class="px-4 py-2 border-b">María</td>
+                <td class="px-4 py-2 border-b">López</td>
+                <td class="px-4 py-2 border-b">2025-05-23</td>
+                <td class="px-4 py-2 border-b">14:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </body>
   </html>

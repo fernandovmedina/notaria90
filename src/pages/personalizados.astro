@@ -1,0 +1,50 @@
+---
+import InsideHeader from "../components/InsideHeader.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+    <InsideHeader />
+  <div class="max-w-5xl mx-auto p-6 border rounded-lg shadow mt-10 bg-white">
+    <h2 class="text-2xl font-bold text-center mb-8">DOCUMENTOS PERSONALIZADOS</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <!-- Columna de Plantillas -->
+      <div class="md:col-span-1 text-center">
+        <h3 class="text-xl font-semibold mb-4">Plantillas</h3>
+
+        <div class="mb-10">
+          <img src="/escritura.jpeg" alt="Carta notarial" class="mx-auto h-32 object-contain border rounded" />
+          <p class="mt-2 font-medium">Escritura publica</p>
+        </div>
+
+        <div>
+          <img src="/carta_poder.png" alt="Testamento" class="mx-auto h-32 object-contain border rounded" />
+          <p class="mt-2 font-medium">Carta poder</p>
+        </div>
+      </div>
+
+      <!-- Formulario para Carta Notarial -->
+      <div class="md:col-span-3 grid grid-cols-2 gap-4">
+        <input class="border rounded px-4 py-2" placeholder="Dato" />
+        <input class="border rounded px-4 py-2" placeholder="Campo obligatorio" />
+        <input class="border rounded px-4 py-2" placeholder="Campo obligatorio" />
+        <input class="border rounded px-4 py-2" placeholder="Dato" />
+        <input class="border rounded px-4 py-2" placeholder="Dato" />
+        <button class="bg-lime-500 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 transition">
+          CREAR
+        </button>
+
+        <!-- Formulario para Testamento (segunda fila completa) -->
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Campo obligatorio" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Dato" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Dato" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Campo obligatorio" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Campo obligatorio" />
+        <button class="bg-lime-500 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 transition">
+          CREAR
+        </button>
+      </div>
+    </div>
+  </div>
+</Layout>
