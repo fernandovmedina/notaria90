@@ -11,18 +11,20 @@ import Layout from "../layouts/Layout.astro";
     </head>
     <body class="bg-gray-100 flex items-center justify-center min-h-screen">
       <HomeHeader />
-      <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto mt-24">
+      <div
+        class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md mx-auto mt-24"
+      >
         <h2 class="text-2xl font-bold text-center mb-6">Iniciar Sesión</h2>
 
-        <form action="/auth/login" method="POST" class="space-y-4">
+        <form id="login-form" class="space-y-4">
           <div>
-            <label for="email" class="block text-gray-700"
+            <label for="correo" class="block text-gray-700"
               >Correo Electrónico</label
             >
             <input
               type="email"
-              id="email"
-              name="email"
+              id="correo"
+              name="correo"
               required
               class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
@@ -52,6 +54,38 @@ import Layout from "../layouts/Layout.astro";
           >
         </p>
       </div>
+
+      <!-- 🧠 Script para manejar el login -->
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const form = document.getElementById("login-form");
+
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
+
+            try {
+              const res = await fetch("http://127.0.0.1:8080/api/user/login", {
+                method: "POST",
+                body: data,
+                mode: "cors",
+                credentials: "include", // para que la cookie se guarde
+              });
+
+              if (res.ok) {
+                window.location.href = "/appointment";
+              } else {
+                alert("Correo o contraseña incorrectos");
+              }
+            } catch (err) {
+              console.error("Error en login:", err);
+              alert("Hubo un error de red al intentar iniciar sesión.");
+            }
+          });
+        });
+      </script>
     </body>
   </html>
 </Layout>

@@ -8,14 +8,17 @@ import InsideHeader from "../components/InsideHeader.astro";
     <head>
       <title>Solicitar Cita</title>
     </head>
-    <body class="flex flex-col items-center justify-start min-h-screen bg-gray-100">
+    <body
+      class="flex flex-col items-center justify-start min-h-screen bg-gray-100"
+    >
       <InsideHeader />
       <div class="bg-white p-8 rounded-2xl shadow-lg mt-8 w-full">
         <h2 class="text-2xl font-semibold text-center mb-4">Solicitar Cita</h2>
-        <form>
+        <form id="appointment-form">
           <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2">Nombre</label>
             <input
+              name="nombre"
               type="text"
               class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Ingrese su nombre"
@@ -24,6 +27,7 @@ import InsideHeader from "../components/InsideHeader.astro";
           <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2">Apellido</label>
             <input
+              name="apellidos"
               type="text"
               class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Ingrese su apellido"
@@ -32,14 +36,9 @@ import InsideHeader from "../components/InsideHeader.astro";
           <div class="mb-4">
             <label class="block text-gray-700 font-medium mb-2">Día</label>
             <input
-              type="date"
-              class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
-          <div class="mb-4">
-            <label class="block text-gray-700 font-medium mb-2">Hora</label>
-            <input
-              type="time"
+              name="dia"
+              type="text"
+              placeholder="mm/dd/yyyy hh:mm"
               class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
@@ -52,7 +51,9 @@ import InsideHeader from "../components/InsideHeader.astro";
       </div>
 
       <div class="bg-white p-8 rounded-2xl shadow-lg mt-8 w-screen px-8">
-        <h2 class="text-2xl font-semibold text-center mb-4">Citas Pendientes</h2>
+        <h2 class="text-2xl font-semibold text-center mb-4">
+          Citas Pendientes
+        </h2>
         <div class="overflow-x-auto">
           <table class="min-w-full table-auto border border-gray-300">
             <thead>
@@ -80,6 +81,30 @@ import InsideHeader from "../components/InsideHeader.astro";
           </table>
         </div>
       </div>
+      <script>
+        const form = document.getElementById("appointment-form");
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const formData = new FormData(form);
+          const data = new URLSearchParams(formData);
+
+          const res = await fetch("http://127.0.0.1:8080/api/user/register-appointment", {
+            method: "POST",
+            body: data,
+            mode: "cors",
+            credentials: "include",
+          });
+
+          if (res.ok) {
+            alert("Cita registrada correctamente");
+            form.reset();
+          } else {
+            alert("Error al registrar la cita");
+          }
+        });
+      </script>
     </body>
   </html>
 </Layout>

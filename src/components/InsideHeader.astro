@@ -3,17 +3,52 @@
 ---
 
 <header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
-    <div>
-      <a href="/" class="flex justify-between items-center cursor-pointer">
-        <img src="/law.png" alt="Logo Notaria90" class="w-16 mr-5" />
-        <h1 class="font-bold text-2xl">Notaria 90</h1>
-      </a>
-    </div>
-    <div>
-      <a href="/appointment" class="text-blue-600 px-4">Solicitar Cita</a>
-      <a href="/expedientes" class="text-blue-600 px-4">Mis tramites</a>
-      <a href="/personalizados" class="text-blue-600 px-4">Documento personalizado</a>
-      <a href="/ingresos" class="text-blue-600 px-4">Pagos</a>
-    </div>
-  </header>
-  
+  <div>
+    <a href="/" class="flex justify-between items-center cursor-pointer">
+      <img src="/law.png" alt="Logo Notaria90" class="w-16 mr-5" />
+      <h1 class="font-bold text-2xl">Notaria 90</h1>
+    </a>
+  </div>
+  <nav class="flex items-center"> {/* Usar <nav> para la navegación es semánticamente mejor */}
+    <a href="/appointment" class="text-blue-600 hover:text-blue-800 px-4">Solicitar Cita</a>
+    <a href="/expedientes" class="text-blue-600 hover:text-blue-800 px-4">Mis trámites</a>
+    <a href="/personalizados" class="text-blue-600 hover:text-blue-800 px-4">Documento personalizado</a>
+    <a href="/ingresos" class="text-blue-600 hover:text-blue-800 px-4">Pagos</a>
+    {/* Nuevo enlace para Cerrar Sesión */}
+    <button id="logout-button" class="text-red-600 hover:text-red-800 px-4 cursor-pointer">Cerrar Sesión</button>
+  </nav>
+</header>
+
+<script>
+  // Lógica para el logout en el frontend
+  const logoutButton = document.getElementById('logout-button');
+
+  if (logoutButton) {
+    logoutButton.addEventListener('click', async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8080/api/user/logout', {
+          method: 'POST', // El backend espera POST o OPTIONS
+          credentials: 'include', // MUY IMPORTANTE para enviar cookies
+          headers: {
+            'Content-Type': 'application/json', // Aunque no enviemos body, es buena práctica
+          },
+        });
+
+        if (response.ok) {
+          // Logout exitoso
+          console.log('Logout exitoso');
+          // Redirigir al usuario a la página de inicio o login
+          window.location.href = '/'; // O a '/login' si tienes una
+        } else {
+          // Error en el logout
+          const errorData = await response.text(); // O response.json() si el backend envía JSON
+          console.error('Error en el logout:', response.status, errorData);
+          alert('Error al cerrar sesión. Intenta de nuevo.');
+        }
+      } catch (error) {
+        console.error('Error de red o en la petición de logout:', error);
+        alert('Error de conexión al intentar cerrar sesión.');
+      }
+    });
+  }
+</script>

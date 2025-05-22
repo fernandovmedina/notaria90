@@ -26,21 +26,24 @@ import Layout from "../layouts/Layout.astro";
 
       <!-- Formulario para Carta Notarial -->
       <div class="md:col-span-3 grid grid-cols-2 gap-4">
-        <input class="border rounded px-4 py-2" placeholder="Dato" />
-        <input class="border rounded px-4 py-2" placeholder="Campo obligatorio" />
-        <input class="border rounded px-4 py-2" placeholder="Campo obligatorio" />
-        <input class="border rounded px-4 py-2" placeholder="Dato" />
-        <input class="border rounded px-4 py-2" placeholder="Dato" />
+        <input class="border rounded px-4 py-2" placeholder="Nombre" />
+        <input class="border rounded px-4 py-2" placeholder="Nacionalidad" />
+        <select name="estados" id="estados_civiles">
+          <option value="soltero">Soltero</option>
+          <option value="casado">Casado</option>
+        </select>
+        <input class="border rounded px-4 py-2" placeholder="Ocupacion" />
+        <input class="border rounded px-4 py-2" placeholder="CURP" />
         <button class="bg-lime-500 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 transition">
           CREAR
         </button>
 
         <!-- Formulario para Testamento (segunda fila completa) -->
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Campo obligatorio" />
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Dato" />
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Dato" />
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Campo obligatorio" />
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Campo obligatorio" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Nombre poderante" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Nombre apoderado" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Domicilio" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="Telefono" />
+        <input class="border rounded px-4 py-2 col-span-1" placeholder="RFC" />
         <button class="bg-lime-500 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 transition">
           CREAR
         </button>
