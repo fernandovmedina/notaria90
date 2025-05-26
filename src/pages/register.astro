@@ -82,7 +82,7 @@ import Layout from "../layouts/Layout.astro";
           const formData = new FormData(form);
           const data = new URLSearchParams(formData);
 
-          const res = await fetch("http://127.0.0.1:8080/api/user/register", {
+          const res = await fetch("http://168.231.75.191:8080/api/user/register", {
             method: "POST",
             body: data,
             mode: "cors",

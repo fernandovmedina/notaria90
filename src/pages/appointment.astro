@@ -80,7 +80,7 @@ import InsideHeader from "../components/InsideHeader.astro";
           const formData = new FormData(form);
           const data = new URLSearchParams(formData);
 
-          const res = await fetch("http://localhost:8080/api/user/register-appointment", {
+          const res = await fetch("http://168.231.75.191:8080/api/user/register-appointment", {
             method: "POST",
             body: data,
             mode: "cors",
@@ -98,7 +98,7 @@ import InsideHeader from "../components/InsideHeader.astro";
 
         async function cargarCitas() {
           try {
-            const res = await fetch("http://localhost:8080/api/user/appointments", {
+            const res = await fetch("http://168.231.75.191:8080/api/user/appointments", {
               method: "GET",
               credentials: "include",
             });

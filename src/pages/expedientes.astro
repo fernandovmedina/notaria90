@@ -44,7 +44,7 @@ import Layout from "../layouts/Layout.astro";
     const tbody = document.getElementById("tramites-body");
     tbody.innerHTML = "";
 
-    fetch("http://localhost:8080/api/user/tramites", {
+    fetch("http://168.231.75.191:8080/api/user/tramites", {
       credentials: "include",
     })
       .then((res) => res.json())
