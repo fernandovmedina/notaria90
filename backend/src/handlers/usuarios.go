@@ -11,7 +11,7 @@ import (
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4321")
+	w.Header().Set("Access-Control-Allow-Origin", "https://notaria90.vercel.app")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
@@ -55,7 +55,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
-		Secure:   false,
+		Secure:   true,
 	}
 	http.SetCookie(w, &cookie)
 
@@ -64,7 +64,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4321")
+	w.Header().Set("Access-Control-Allow-Origin", "https://notaria90.vercel.app")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
@@ -104,7 +104,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
-		Secure:   false,
+		Secure:   true,
 	}
 
 	http.SetCookie(w, cookie)
@@ -116,7 +116,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 func Logout(w http.ResponseWriter, r *http.Request) {
 	origin := r.Header.Get("Origin")
-	if origin == "http://localhost:4321" { // solo permitimos este origen explícitamente
+	if origin == "https://notaria90.vercel.app" { // solo permitimos este origen explícitamente
 		w.Header().Set("Access-Control-Allow-Origin", origin)
 	}
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -135,7 +135,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Unix(0, 0),
 		MaxAge:   -1,
 		HttpOnly: true,
-		Secure:   false,
+		Secure:   true,
 	}
 	http.SetCookie(w, &cookie)
 

@@ -49,7 +49,7 @@ type Appointment struct {
 }
 
 func GetAppointments(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4321")
+	w.Header().Set("Access-Control-Allow-Origin", "https://notaria90.vercel.app")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 
 	cookie, err := r.Cookie("usuario")
