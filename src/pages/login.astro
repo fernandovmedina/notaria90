@@ -67,11 +67,11 @@ import Layout from "../layouts/Layout.astro";
             const data = new URLSearchParams(formData);
 
             try {
-              const res = await fetch("http://127.0.0.1:8080/api/user/login", {
+              const res = await fetch("http://localhost:8080/api/user/login", {
                 method: "POST",
                 body: data,
                 mode: "cors",
-                credentials: "include", // para que la cookie se guarde
+                credentials: "include",
               });
 
               if (res.ok) {

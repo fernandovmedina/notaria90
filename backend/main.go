@@ -21,10 +21,13 @@ func main() {
 	mux.HandleFunc("GET /api", handlers.Welcome)
 	mux.HandleFunc("POST /api/user/register", handlers.Register)
 	mux.HandleFunc("POST /api/user/login", handlers.Login)
-	mux.HandleFunc("/api/user/logout", handlers.Logout)
+	mux.HandleFunc("POST /api/user/logout", handlers.Logout)
 	mux.HandleFunc("POST /api/user/register-appointment", handlers.RegisterApointment)
+	mux.HandleFunc("GET /api/user/appointments", handlers.GetAppointments)
 	mux.HandleFunc("POST /api/user/escritura-publica", handlers.EscrituraPublica)
 	mux.HandleFunc("POST /api/user/carta-poder", handlers.CartaPoder)
+	mux.HandleFunc("GET /api/user/tramites", handlers.GetTramites)
+	mux.HandleFunc("POST /api/user/pago", handlers.RegistrarPago)
 
 	handler := withCORS(mux)
 
@@ -36,7 +39,7 @@ func main() {
 		Handler:        handler,
 	}
 
-	log.Println("Server running on http://127.0.0.1:8080/api")
+	log.Println("Server running on http://localhost:8080/api")
 
 	if err = server.ListenAndServe(); err != nil {
 		log.Println(err.Error())

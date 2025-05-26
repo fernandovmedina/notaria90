@@ -55,12 +55,12 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
-		Secure:   false, // Considerar true en producción con HTTPS
+		Secure:   false,
 	}
 	http.SetCookie(w, &cookie)
-	// Respondemos con un OK para indicar que el registro fue exitoso
+
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Registro exitoso")) // Opcional: puedes enviar un mensaje
+	w.Write([]byte("Registro exitoso"))
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -104,8 +104,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
-		Secure:   false, // Asegúrate que coincida con tu entorno
-		SameSite: http.SameSiteLaxMode,
+		Secure:   false,
 	}
 
 	http.SetCookie(w, cookie)
@@ -116,22 +115,18 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
-	// Establecer cabeceras comunes primero
-	origin := "http://localhost:4321" // Asegúrate que este sea el origen de tu frontend Astro
+	origin := r.Header.Get("Origin")
+	if origin == "http://localhost:4321" { // solo permitimos este origen explícitamente
+		w.Header().Set("Access-Control-Allow-Origin", origin)
+	}
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Origin", origin)
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 
 	if r.Method == http.MethodOptions {
-		w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS") // Métodos que permites para esta ruta
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")  // Cabeceras que permites en la solicitud real
 		w.WriteHeader(http.StatusOK)
 		return
 	}
-
-	// Si no es OPTIONS, es la solicitud POST para Logout
-	// (Asegúrate que las cabeceras de arriba como Allow-Origin y Allow-Credentials también se apliquen aquí)
-	// w.Header().Set("Access-Control-Allow-Origin", origin) // Ya está arriba, pero no hace daño repetirla si hay dudas.
-	// w.Header().Set("Access-Control-Allow-Credentials", "true") // Ya está arriba.
 
 	cookie := http.Cookie{
 		Name:     "usuario",
@@ -140,12 +135,10 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Unix(0, 0),
 		MaxAge:   -1,
 		HttpOnly: true,
-		Secure:   false,                // Coincidir con la cookie de Login
-		SameSite: http.SameSiteLaxMode, // Coincidir con la cookie de Login
+		Secure:   false,
 	}
 	http.SetCookie(w, &cookie)
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Logout exitoso"))
 	log.Println("Usuario deslogueado")
 }

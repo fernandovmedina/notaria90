@@ -1,0 +1,74 @@
+---
+import InsideHeader from "../components/InsideHeader.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <InsideHeader />
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const poderante = params.get("poderante");
+    const apoderado = params.get("apoderado");
+    const domicilio = params.get("domicilio");
+    const telefono = params.get("telefono");
+    const rfc = params.get("rfc");
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("poderante").textContent = poderante || "[Nombre del otorgante]";
+      document.getElementById("apoderado").textContent = apoderado || "[Nombre del apoderado]";
+      document.getElementById("domicilio").textContent = domicilio || "[Domicilio]";
+      document.getElementById("telefono").textContent = telefono || "[Teléfono]";
+      document.getElementById("rfc").textContent = rfc || "[RFC]";
+    });
+  </script>
+
+  <div class="max-w-3xl mx-auto bg-white p-10 mt-10 border border-gray-300 shadow rounded leading-relaxed">
+    <h2 class="text-2xl font-bold text-center mb-8">Carta Poder</h2>
+
+    <p>Saltillo, Coahuila a [DÍA] de [MES] de [AÑO]</p>
+
+    <p class="mt-6">
+      Por la presente, yo <strong id="poderante">[Nombre del otorgante]</strong>, con domicilio en 
+      <strong id="domicilio">[Domicilio]</strong>, teléfono <strong id="telefono">[Teléfono]</strong> 
+      y RFC <strong id="rfc">[RFC]</strong>, otorgo poder amplio, cumplido y bastante a favor de 
+      <strong id="apoderado">[Nombre del apoderado]</strong>, para que en mi nombre y representación
+      realice los trámites, gestiones y actos legales necesarios ante autoridades, instituciones y
+      particulares que sean requeridos, relacionados con [describir brevemente el propósito del poder].
+    </p>
+
+    <p class="mt-6">
+      Este poder se otorga con facultades para sustituir, revocar, y en general para actuar en mi nombre
+      en todos los asuntos inherentes al presente encargo.
+    </p>
+
+    <p class="mt-6">Sin más que hacer constar, firmo la presente en la ciudad y fecha indicadas.</p>
+
+    <div class="mt-10 flex justify-around text-center">
+      <div>
+        ___________________________<br />
+        <span id="poderante">[Nombre del otorgante]</span><br />
+        Otorgante
+      </div>
+      <div>
+        ___________________________<br />
+        <span id="apoderado">[Nombre del apoderado]</span><br />
+        Apoderado
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <p class="text-sm text-gray-500">Testigos:</p>
+      <div class="flex justify-between mt-6">
+        <div>
+          ___________________________<br />
+          Nombre y firma
+        </div>
+        <div>
+          ___________________________<br />
+          Nombre y firma
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

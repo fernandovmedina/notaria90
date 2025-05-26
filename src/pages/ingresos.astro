@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import InsideHeader from "../components/InsideHeader.astro"
+import InsideHeader from "../components/InsideHeader.astro";
 ---
 
 <Layout>
-    <InsideHeader />
+  <InsideHeader />
   <div class="max-w-4xl mx-auto p-6 border rounded-lg shadow mt-10 bg-white">
     <h2 class="text-2xl font-bold text-center mb-6">Pagos realizados</h2>
 
@@ -22,39 +22,82 @@ import InsideHeader from "../components/InsideHeader.astro"
       />
 
       <div class="flex flex-col md:flex-row gap-4">
-        <input type="text" placeholder="Fecha de vencimiento" class="border rounded px-4 py-2 w-full md:w-1/3" />
-        <input type="text" placeholder="CVV" class="border rounded px-4 py-2 w-full md:w-1/3" />
-        <input type="text" placeholder="Monto" class="border rounded px-4 py-2 w-full md:w-1/3" />
+        <input
+          type="text"
+          placeholder="Fecha de vencimiento"
+          class="border rounded px-4 py-2 w-full md:w-1/3"
+        />
+        <input
+          type="text"
+          placeholder="CVV"
+          class="border rounded px-4 py-2 w-full md:w-1/3"
+        />
+        <input
+          type="text"
+          placeholder="Monto"
+          class="border rounded px-4 py-2 w-full md:w-1/3"
+        />
       </div>
 
-      <button class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition w-fit self-center">
+      <button
+        class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition w-fit self-center"
+        id="btn-pagar"
+      >
         Realizar pago
       </button>
     </div>
 
-    <h3 class="text-lg font-semibold text-center mb-4">PAGOS</h3>
+    <script is:client type="module">
+      // Obtener parámetros de la URL
+      const params = new URLSearchParams(window.location.search);
+      const montoUrl = params.get("monto");
+      const idEscritura = params.get("id_escritura_publica");
+      const idCartaPoder = params.get("id_carta_poder");
 
-    <div class="overflow-x-auto">
-      <table class="min-w-full border border-gray-300 text-sm text-left">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="border px-4 py-2">ID</th>
-            <th class="border px-4 py-2">NOMBRE</th>
-            <th class="border px-4 py-2">APELLIDOS</th>
-            <th class="border px-4 py-2">NUMERO DE TARJETA</th>
-            <th class="border px-4 py-2">MONTO</th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr class="text-center">
-              <td class="border px-4 py-2">#N</td>
-              <td class="border px-4 py-2">Fernando Alejandro</td>
-              <td class="border px-4 py-2">Vazquez Medina</td>
-              <td class="border px-4 py-2">1111-1111-1111-1111</td>
-              <td class="border px-4 py-2">999</td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
+      // Si hay monto en la URL, asignarlo al input correspondiente
+      if (montoUrl) {
+        const inputs = document.querySelectorAll("input");
+        const montoInput = Array.from(inputs).find((input) =>
+          input.placeholder.toLowerCase().includes("monto"),
+        );
+        if (montoInput) {
+          montoInput.value = montoUrl;
+        }
+      }
+
+      // Agregar evento al botón
+      document
+        .getElementById("btn-pagar")
+        .addEventListener("click", async () => {
+          const inputs = document.querySelectorAll("input");
+          const [nombre, tarjeta, vencimiento, cvv, monto] = Array.from(
+            inputs,
+          ).map((i) => i.value.trim());
+
+          const body = {
+            nombre,
+            tarjeta,
+            fecha_de_vencimiento: vencimiento,
+            cvv: parseInt(cvv),
+            monto,
+          };
+
+          if (idEscritura) body.id_escritura_publica = parseInt(idEscritura);
+          if (idCartaPoder) body.id_carta_poder = parseInt(idCartaPoder);
+
+          const res = await fetch("http://localhost:8080/api/user/pago", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+
+          if (res.ok) {
+            alert("Pago registrado exitosamente.");
+            window.location.href = "/expedientes";
+          } else {
+            alert("Error al registrar el pago.");
+          }
+        });
+    </script>
   </div>
 </Layout>

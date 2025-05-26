@@ -1,0 +1,54 @@
+---
+import InsideHeader from "../components/InsideHeader.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <InsideHeader />
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const nombre = params.get("nombre");
+    const nacionalidad = params.get("nacionalidad");
+    const estadoCivil = params.get("estado_civil");
+    const ocupacion = params.get("ocupacion");
+    const curp = params.get("curp");
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("nombre").textContent = nombre || "[Nombre]";
+      document.getElementById("nacionalidad").textContent = nacionalidad || "[Nacionalidad]";
+      document.getElementById("estado-civil").textContent = estadoCivil || "[Estado Civil]";
+      document.getElementById("ocupacion").textContent = ocupacion || "[Ocupación]";
+      document.getElementById("curp").textContent = curp || "[CURP]";
+    });
+  </script>
+
+  <div class="max-w-3xl mx-auto bg-white p-10 mt-10 border border-gray-300 shadow rounded leading-relaxed">
+    <h2 class="text-2xl font-bold text-center mb-8">Escritura Pública</h2>
+
+    <p>En la ciudad de <strong>Saltillo, Coahuila</strong>, a los [DÍA] días del mes de [MES] del año [AÑO], ante mí, el Licenciado <strong>[Nombre del notario]</strong>, Notario Público número [#], comparece la persona cuyos datos se señalan a continuación:</p>
+
+    <ul class="list-disc list-inside my-6">
+      <li><strong>Nombre:</strong> <span id="nombre">[Nombre]</span></li>
+      <li><strong>Nacionalidad:</strong> <span id="nacionalidad">[Nacionalidad]</span></li>
+      <li><strong>Estado civil:</strong> <span id="estado-civil">[Estado Civil]</span></li>
+      <li><strong>Ocupación:</strong> <span id="ocupacion">[Ocupación]</span></li>
+      <li><strong>CURP:</strong> <span id="curp">[CURP]</span></li>
+    </ul>
+
+    <p>Manifiesta su voluntad de formalizar el presente acto jurídico en los términos que se expresan en esta escritura pública, la cual queda asentada conforme a derecho.</p>
+
+    <p class="mt-6">Leída que fue la presente, se firma para constancia.</p>
+
+    <div class="text-center mt-10">
+      ___________________________<br />
+      <span id="nombre">[Nombre]</span><br />
+      Firma del otorgante
+    </div>
+
+    <div class="mt-10 text-sm text-gray-500">
+      <p>Notario Público: ___________________________</p>
+      <p>Número de Notaría: [#]</p>
+    </div>
+  </div>
+</Layout>

@@ -8,9 +8,7 @@ import InsideHeader from "../components/InsideHeader.astro";
     <head>
       <title>Solicitar Cita</title>
     </head>
-    <body
-      class="flex flex-col items-center justify-start min-h-screen bg-gray-100"
-    >
+    <body class="flex flex-col items-center justify-start min-h-screen bg-gray-100">
       <InsideHeader />
       <div class="bg-white p-8 rounded-2xl shadow-lg mt-8 w-full">
         <h2 class="text-2xl font-semibold text-center mb-4">Solicitar Cita</h2>
@@ -22,6 +20,7 @@ import InsideHeader from "../components/InsideHeader.astro";
               type="text"
               class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Ingrese su nombre"
+              required
             />
           </div>
           <div class="mb-4">
@@ -31,6 +30,7 @@ import InsideHeader from "../components/InsideHeader.astro";
               type="text"
               class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Ingrese su apellido"
+              required
             />
           </div>
           <div class="mb-4">
@@ -40,6 +40,7 @@ import InsideHeader from "../components/InsideHeader.astro";
               type="text"
               placeholder="mm/dd/yyyy hh:mm"
               class="w-full py-2 px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              required
             />
           </div>
           <button
@@ -51,36 +52,25 @@ import InsideHeader from "../components/InsideHeader.astro";
       </div>
 
       <div class="bg-white p-8 rounded-2xl shadow-lg mt-8 w-screen px-8">
-        <h2 class="text-2xl font-semibold text-center mb-4">
-          Citas Pendientes
-        </h2>
+        <h2 class="text-2xl font-semibold text-center mb-4">Citas Pendientes</h2>
         <div class="overflow-x-auto">
           <table class="min-w-full table-auto border border-gray-300">
             <thead>
               <tr class="bg-gray-200 text-left">
                 <th class="px-4 py-2 border-b">Nombre</th>
                 <th class="px-4 py-2 border-b">Apellido</th>
-                <th class="px-4 py-2 border-b">Día</th>
-                <th class="px-4 py-2 border-b">Hora</th>
+                <th class="px-4 py-2 border-b">Fecha y hora</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="hover:bg-gray-100">
-                <td class="px-4 py-2 border-b">Juan</td>
-                <td class="px-4 py-2 border-b">Pérez</td>
-                <td class="px-4 py-2 border-b">2025-05-22</td>
-                <td class="px-4 py-2 border-b">10:30</td>
-              </tr>
-              <tr class="hover:bg-gray-100">
-                <td class="px-4 py-2 border-b">María</td>
-                <td class="px-4 py-2 border-b">López</td>
-                <td class="px-4 py-2 border-b">2025-05-23</td>
-                <td class="px-4 py-2 border-b">14:00</td>
+            <tbody id="citas-body">
+              <tr>
+                <td colspan="3" class="px-4 py-2 text-center text-gray-500">Cargando citas...</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
+
       <script>
         const form = document.getElementById("appointment-form");
 
@@ -90,7 +80,7 @@ import InsideHeader from "../components/InsideHeader.astro";
           const formData = new FormData(form);
           const data = new URLSearchParams(formData);
 
-          const res = await fetch("http://127.0.0.1:8080/api/user/register-appointment", {
+          const res = await fetch("http://localhost:8080/api/user/register-appointment", {
             method: "POST",
             body: data,
             mode: "cors",
@@ -100,10 +90,57 @@ import InsideHeader from "../components/InsideHeader.astro";
           if (res.ok) {
             alert("Cita registrada correctamente");
             form.reset();
+            cargarCitas(); // Recargar la tabla
           } else {
             alert("Error al registrar la cita");
           }
         });
+
+        async function cargarCitas() {
+          try {
+            const res = await fetch("http://localhost:8080/api/user/appointments", {
+              method: "GET",
+              credentials: "include",
+            });
+
+            const json = await res.json();
+            const citas = json.body || [];
+
+            const tbody = document.getElementById("citas-body");
+            tbody.innerHTML = "";
+
+            if (citas.length === 0) {
+              tbody.innerHTML = `
+                <tr>
+                  <td colspan="3" class="px-4 py-2 text-center text-gray-500">No hay citas registradas.</td>
+                </tr>
+              `;
+              return;
+            }
+
+            citas.forEach((cita) => {
+              const row = document.createElement("tr");
+              row.className = "hover:bg-gray-100";
+              row.innerHTML = `
+                <td class="px-4 py-2 border-b">${cita.nombre}</td>
+                <td class="px-4 py-2 border-b">${cita.apellido}</td>
+                <td class="px-4 py-2 border-b">${cita.dia}</td>
+              `;
+              tbody.appendChild(row);
+            });
+          } catch (err) {
+            console.error("Error al cargar citas:", err);
+            const tbody = document.getElementById("citas-body");
+            tbody.innerHTML = `
+              <tr>
+                <td colspan="3" class="px-4 py-2 text-center text-red-500">Error al cargar citas.</td>
+              </tr>
+            `;
+          }
+        }
+
+        // Cargar las citas al iniciar la página
+        window.addEventListener("DOMContentLoaded", cargarCitas);
       </script>
     </body>
   </html>

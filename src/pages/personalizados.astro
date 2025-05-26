@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-    <InsideHeader />
+  <InsideHeader />
   <div class="max-w-5xl mx-auto p-6 border rounded-lg shadow mt-10 bg-white">
     <h2 class="text-2xl font-bold text-center mb-8">DOCUMENTOS PERSONALIZADOS</h2>
 
@@ -15,39 +15,84 @@ import Layout from "../layouts/Layout.astro";
 
         <div class="mb-10">
           <img src="/escritura.jpeg" alt="Carta notarial" class="mx-auto h-32 object-contain border rounded" />
-          <p class="mt-2 font-medium">Escritura publica</p>
+          <p class="mt-2 font-medium">Escritura pública</p>
         </div>
 
         <div>
-          <img src="/carta_poder.png" alt="Testamento" class="mx-auto h-32 object-contain border rounded" />
+          <img src="/carta_poder.png" alt="Carta poder" class="mx-auto h-32 object-contain border rounded" />
           <p class="mt-2 font-medium">Carta poder</p>
         </div>
       </div>
 
-      <!-- Formulario para Carta Notarial -->
+      <!-- Formularios -->
       <div class="md:col-span-3 grid grid-cols-2 gap-4">
-        <input class="border rounded px-4 py-2" placeholder="Nombre" />
-        <input class="border rounded px-4 py-2" placeholder="Nacionalidad" />
-        <select name="estados" id="estados_civiles">
-          <option value="soltero">Soltero</option>
-          <option value="casado">Casado</option>
-        </select>
-        <input class="border rounded px-4 py-2" placeholder="Ocupacion" />
-        <input class="border rounded px-4 py-2" placeholder="CURP" />
-        <button class="bg-lime-500 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 transition">
-          CREAR
-        </button>
+        <!-- Escritura Pública -->
+        <form id="form-escritura" class="contents">
+          <input name="nombre" class="border rounded px-4 py-2" placeholder="Nombre" required />
+          <input name="nacionalidad" class="border rounded px-4 py-2" placeholder="Nacionalidad" required />
+          <select name="estado_civil" id="estados_civiles" class="border rounded px-4 py-2">
+            <option value="soltero">Soltero</option>
+            <option value="casado">Casado</option>
+          </select>
+          <input name="ocupacion" class="border rounded px-4 py-2" placeholder="Ocupación" required />
+          <input name="curp" class="border rounded px-4 py-2" placeholder="CURP" required />
+          <button type="submit" class="bg-lime-500 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 transition col-span-2">
+            CREAR ESCRITURA
+          </button>
+        </form>
 
-        <!-- Formulario para Testamento (segunda fila completa) -->
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Nombre poderante" />
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Nombre apoderado" />
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Domicilio" />
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="Telefono" />
-        <input class="border rounded px-4 py-2 col-span-1" placeholder="RFC" />
-        <button class="bg-lime-500 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 transition">
-          CREAR
-        </button>
+        <!-- Carta Poder -->
+        <form id="form-carta" class="contents mt-6">
+          <input name="poderante" class="border rounded px-4 py-2 col-span-1" placeholder="Nombre poderante" required />
+          <input name="apoderado" class="border rounded px-4 py-2 col-span-1" placeholder="Nombre apoderado" required />
+          <input name="domicilio" class="border rounded px-4 py-2 col-span-1" placeholder="Domicilio" required />
+          <input name="telefono" class="border rounded px-4 py-2 col-span-1" placeholder="Teléfono" required />
+          <input name="rfc" class="border rounded px-4 py-2 col-span-1" placeholder="RFC" required />
+          <button type="submit" class="bg-lime-500 text-white font-semibold px-4 py-2 rounded hover:bg-lime-600 transition col-span-2">
+            CREAR CARTA PODER
+          </button>
+        </form>
       </div>
     </div>
   </div>
+
+  <script>
+    document.getElementById("form-escritura").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+
+      const res = await fetch("http://localhost:8080/api/user/escritura-publica", {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        alert("Escritura pública registrada correctamente.");
+        form.reset();
+      } else {
+        alert("Error al registrar la escritura.");
+      }
+    });
+
+    document.getElementById("form-carta").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+
+      const res = await fetch("http://localhost:8080/api/user/carta-poder", {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
+
+      if (res.ok) {
+        alert("Carta poder registrada correctamente.");
+        form.reset();
+      } else {
+        alert("Error al registrar la carta poder.");
+      }
+    });
+  </script>
 </Layout>
